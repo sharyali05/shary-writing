@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shary — Essays, Stories & Mathematics</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Nunito:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #fdf6ed;
+    color: #3a2e25;
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: #fdf6ed;
+    border-bottom: 1.5px solid #e8d9c5;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #3a2e25;
+  }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #8c7060;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.18s;
+  }
+  .nav-links a:hover { color: #c4714a; }
+
+  /* ── HERO ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    min-height: 420px;
+    background: #fdf6ed;
+    border-bottom: 1.5px solid #e8d9c5;
+    overflow: hidden;
+  }
+  .hero-text {
+    padding: 3.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hello-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c4714a;
+    background: #fceee5;
+    padding: 0.3rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+    width: fit-content;
+  }
+  .hero-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #2b1f15;
+    margin-bottom: 0.5rem;
+  }
+  .hero-text h1 em { font-style: italic; color: #c4714a; }
+  .hero-byline {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: #8c7060;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    max-width: 400px;
+  }
+  .hero-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.9rem;
+    border-radius: 100px;
+    border: 1.5px solid;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: transparent;
+  }
+  .tag-op  { border-color: #c4714a; color: #c4714a; }
+  .tag-st  { border-color: #7a9e7e; color: #7a9e7e; }
+  .tag-ma  { border-color: #6b87b8; color: #6b87b8; }
+  .tag:hover { background: currentColor; color: #fdf6ed; }
+
+  .hero-illustration {
+    background: #f5ebe0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    border-left: 1.5px solid #e8d9c5;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #2b1f15;
+  }
+  .section-line { flex: 1; height: 1px; background: #e8d9c5; }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .card {
+    background: #fff9f3;
+    border: 1.5px solid #e8d9c5;
+    border-radius: 16px;
+    padding: 1.6rem;
+    cursor: pointer;
+    transition: transform 0.18s, border-color 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { transform: translateY(-3px); border-color: #c4714a; }
+  .card-deco {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    opacity: 0.07;
+    font-size: 5rem;
+    user-select: none;
+    pointer-events: none;
+  }
+  .card-cat {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .cat-op { color: #c4714a; }
+  .cat-st { color: #7a9e7e; }
+  .cat-ma { color: #6b87b8; }
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #2b1f15;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+  }
+  .card.featured h3 { font-size: 1.35rem; font-style: italic; }
+  .card p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.88rem;
+    color: #8c7060;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .card-meta { font-size: 0.72rem; color: #b09a85; }
+
+  .row-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .mini-card {
+    background: #fff9f3;
+    border: 1.5px solid #e8d9c5;
+    border-radius: 14px;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: transform 0.18s, border-color 0.18s;
+  }
+  .mini-card:hover { transform: translateY(-2px); border-color: #7a9e7e; }
+  .mini-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: #2b1f15;
+    line-height: 1.35;
+    margin-bottom: 0.5rem;
+  }
+  .mini-card p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.82rem;
+    color: #8c7060;
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .read-more {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #c4714a;
+    text-decoration: none;
+  }
+
+  /* ── FIREPLACE ── */
+  .fireplace-band {
+    background: #2b1f15;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    overflow: hidden;
+    border-top: 1.5px solid #1a1008;
+    border-bottom: 1.5px solid #1a1008;
+  }
+
+  /* ── ABOUT ── */
+  .about-band {
+    background: #f5ebe0;
+    border-top: 1.5px solid #e8d9c5;
+    border-bottom: 1.5px solid #e8d9c5;
+    padding: 2.5rem;
+  }
+  .about-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .about-copy h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #2b1f15;
+    margin-bottom: 0.75rem;
+  }
+  .about-copy p {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.92rem;
+    color: #6b5545;
+    line-height: 1.85;
+  }
+
+  /* ── SUBSCRIBE ── */
+  .subscribe-band {
+    background: #3a2e25;
+    padding: 3rem 2.5rem;
+    text-align: center;
+  }
+  .subscribe-band p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #f5ebe0;
+    margin-bottom: 0.4rem;
+  }
+  .subscribe-sub {
+    font-size: 0.82rem;
+    color: #a08070;
+    margin-bottom: 1.4rem;
+  }
+  .sub-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .sub-row input {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
+    border: 1.5px solid #5a4535;
+    border-radius: 100px;
+    background: #4a3828;
+    color: #f5ebe0;
+    outline: none;
+    font-family: 'Nunito', sans-serif;
+  }
+  .sub-row input::placeholder { color: #7a6050; }
+  .sub-btn {
+    padding: 0.65rem 1.4rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: #c4714a;
+    color: #fdf6ed;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    transition: background 0.18s;
+  }
+  .sub-btn:hover { background: #d4825b; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #fdf6ed;
+    border-top: 1.5px solid #e8d9c5;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: #b09a85;
+    font-size: 1rem;
+  }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #b09a85;
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+  .footer-links a:hover { color: #c4714a; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes flicker1 { 0%,100%{opacity:1} 45%{opacity:.85} 55%{opacity:.95} 70%{opacity:.8} }
+  @keyframes flicker2 { 0%,100%{opacity:.9} 30%{opacity:1} 60%{opacity:.75} 80%{opacity:.95} }
+  @keyframes flicker3 { 0%,100%{opacity:.7} 20%{opacity:.9} 50%{opacity:.6} 75%{opacity:.85} }
+  @keyframes rise { 0%{transform:translateY(0) scaleX(1)} 50%{transform:translateY(-6px) scaleX(0.85)} 100%{transform:translateY(0) scaleX(1)} }
+  .flame1 { animation: flicker1 1.8s ease-in-out infinite; }
+  .flame2 { animation: flicker2 2.2s ease-in-out infinite; }
+  .flame3 { animation: flicker3 1.5s ease-in-out infinite; }
+  .steam  { animation: rise 3s ease-in-out infinite; transform-origin: bottom center; }
+  .steam2 { animation: rise 3.6s ease-in-out infinite 0.8s; transform-origin: bottom center; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-illustration { display: none; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .row-cards { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    .hero-text { padding: 2rem 1.25rem; }
+    .section { padding: 2rem 1.25rem; }
+    .about-inner { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Shary</div>
+  <ul class="nav-links">
+    <li><a href="#">writing</a></li>
+    <li><a href="#">opinion</a></li>
+    <li><a href="#">stories</a></li>
+    <li><a href="#">math</a></li>
+    <li><a href="#">about</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hello-tag">welcome, come on in</div>
+    <h1>Words for every<br><em>kind of wonder</em></h1>
+    <p class="hero-byline">Essays, short fiction, and mathematics — written slowly, with care, by someone who believes every idea deserves a proper home.</p>
+    <div class="hero-tags">
+      <span class="tag tag-op">Opinion</span>
+      <span class="tag tag-st">Short stories</span>
+      <span class="tag tag-ma">Mathematics</span>
+    </div>
+  </div>
+  <div class="hero-illustration">
+    <svg viewBox="0 0 380 420" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <rect width="380" height="420" fill="#f5ebe0"/>
+      <rect x="0" y="300" width="380" height="120" fill="#e8d5be"/>
+      <rect x="0" y="390" width="380" height="30" fill="#d4bfa0"/>
+      <!-- bookshelf -->
+      <rect x="20" y="120" width="180" height="290" rx="8" fill="#c8a882"/>
+      <rect x="22" y="122" width="176" height="286" rx="6" fill="#d4b896"/>
+      <rect x="30" y="130" width="30" height="270" rx="3" fill="#8B6348"/>
+      <rect x="32" y="132" width="26" height="266" rx="2" fill="#A0795A"/>
+      <rect x="38" y="150" width="14" height="3" rx="1" fill="#c8a882"/>
+      <rect x="38" y="160" width="14" height="2" rx="1" fill="#c8a882"/>
+      <rect x="65" y="130" width="22" height="270" rx="3" fill="#6B4C35"/>
+      <rect x="67" y="132" width="18" height="266" rx="2" fill="#8B6348"/>
+      <rect x="90" y="130" width="28" height="270" rx="3" fill="#4A7C59"/>
+      <rect x="92" y="132" width="24" height="266" rx="2" fill="#5E9E72"/>
+      <rect x="97" y="145" width="12" height="2" rx="1" fill="#d4f0dc"/>
+      <rect x="97" y="152" width="9" height="2" rx="1" fill="#d4f0dc"/>
+      <rect x="121" y="130" width="18" height="270" rx="3" fill="#8B4513"/>
+      <rect x="123" y="132" width="14" height="266" rx="2" fill="#A0522D"/>
+      <rect x="142" y="130" width="32" height="270" rx="3" fill="#2E4A7A"/>
+      <rect x="144" y="132" width="28" height="266" rx="2" fill="#3A5E9E"/>
+      <rect x="149" y="148" width="16" height="2" rx="1" fill="#bcd4f8"/>
+      <rect x="149" y="155" width="12" height="2" rx="1" fill="#bcd4f8"/>
+      <rect x="177" y="130" width="15" height="270" rx="3" fill="#7A5C35"/>
+      <rect x="179" y="132" width="11" height="266" rx="2" fill="#9A7A50"/>
+      <rect x="24" y="376" width="172" height="14" rx="3" fill="#b8956a"/>
+      <!-- candle -->
+      <ellipse cx="300" cy="200" rx="28" ry="35" fill="#f9e4b8"/>
+      <ellipse cx="300" cy="200" rx="20" ry="28" fill="#fdf0d0"/>
+      <ellipse cx="300" cy="165" rx="6" ry="18" fill="#fce8b0"/>
+      <ellipse cx="300" cy="152" rx="4" ry="8" fill="#ffd97a"/>
+      <ellipse cx="300" cy="148" rx="3" ry="5" fill="#ffb347" opacity="0.9"/>
+      <ellipse cx="300" cy="145" rx="2" ry="3" fill="#ff8c42" opacity="0.8"/>
+      <rect x="295" y="233" width="10" height="60" rx="4" fill="#8B6348"/>
+      <ellipse cx="300" cy="295" rx="22" ry="6" fill="#7A5535"/>
+      <rect x="200" y="302" width="160" height="8" rx="3" fill="#b8956a"/>
+      <!-- open book -->
+      <rect x="50" y="310" width="90" height="75" rx="8" fill="#c8956a"/>
+      <rect x="54" y="314" width="82" height="67" rx="6" fill="#dba878"/>
+      <rect x="58" y="350" width="74" height="25" rx="5" fill="#e8c49a"/>
+      <rect x="62" y="320" width="66" height="26" rx="4" fill="#f0d4a8"/>
+      <rect x="65" y="323" width="18" height="20" rx="2" fill="#c8956a"/>
+      <rect x="86" y="323" width="39" height="4" rx="1" fill="#c8956a" opacity="0.7"/>
+      <rect x="86" y="330" width="30" height="3" rx="1" fill="#c8956a" opacity="0.5"/>
+      <rect x="86" y="336" width="35" height="3" rx="1" fill="#c8956a" opacity="0.5"/>
+      <!-- stacked books -->
+      <rect x="150" y="320" width="80" height="65" rx="8" fill="#8B6348"/>
+      <rect x="154" y="324" width="72" height="57" rx="6" fill="#a07850"/>
+      <rect x="158" y="328" width="28" height="45" rx="3" fill="#2E4A7A"/>
+      <rect x="160" y="330" width="24" height="41" rx="2" fill="#3A5E9E"/>
+      <rect x="190" y="330" width="30" height="49" rx="3" fill="#4A7C59"/>
+      <rect x="192" y="332" width="26" height="45" rx="2" fill="#5E9E72"/>
+      <!-- floor -->
+      <rect x="0" y="390" width="380" height="30" fill="#c4a07a"/>
+      <rect x="0" y="390" width="380" height="6" fill="#d4b896"/>
+    </svg>
+  </div>
+</div>
+
+<!-- WRITING SECTION -->
+<div class="section">
+  <div class="section-header">
+    <span style="font-size:1.3rem">📖</span>
+    <div class="section-title">recent writing</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="cards-grid">
+    <div class="card featured">
+      <div class="card-deco">✍️</div>
+      <div class="card-cat cat-op">Opinion</div>
+      <h3>The quiet erosion of institutional trust, and why it matters more than we admit</h3>
+      <p>We've grown comfortable with cynicism. Beneath the knowing shrug lies something more dangerous — a slow forgetting of what collective faith once made possible.</p>
+      <div class="card-meta">June 2, 2025 · 8 min read</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.25rem;">
+      <div class="card">
+        <div class="card-deco">🌿</div>
+        <div class="card-cat cat-st">Short story</div>
+        <h3>The cartographer's last map</h3>
+        <p>A woman draws borders for a living. Then her sister disappears across one.</p>
+        <div class="card-meta">May 18, 2025 · 12 min read</div>
+      </div>
+      <div class="card">
+        <div class="card-deco">∞</div>
+        <div class="card-cat cat-ma">Mathematics</div>
+        <h3>Why infinity comes in different sizes</h3>
+        <p>Cantor's diagonal argument, made human.</p>
+        <div class="card-meta">May 5, 2025 · 6 min read</div>
+      </div>
+    </div>
+  </div>
+  <div class="row-cards">
+    <div class="mini-card">
+      <div class="card-cat cat-op">Opinion</div>
+      <h3>On the aesthetics of disagreement</h3>
+      <p>There is a way to argue that creates rather than destroys. We've mostly forgotten it.</p>
+      <a class="read-more" href="#">Read →</a>
+    </div>
+    <div class="mini-card">
+      <div class="card-cat cat-st">Short story</div>
+      <h3>What the river remembers</h3>
+      <p>Three generations. One flooding season. A family reckons with what water takes and what it leaves behind.</p>
+      <a class="read-more" href="#">Read →</a>
+    </div>
+    <div class="mini-card">
+      <div class="card-cat cat-ma">Mathematics</div>
+      <h3>The geometry of soap bubbles</h3>
+      <p>Minimal surfaces, Plateau's problem, and what nature optimizes when nobody tells it what to do.</p>
+      <a class="read-more" href="#">Read →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FIREPLACE BAND -->
+<div class="fireplace-band">
+  <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block;">
+    <rect width="900" height="340" fill="#2b1f15"/>
+    <!-- left fireplace -->
+    <rect x="20" y="30" width="260" height="300" rx="4" fill="#1a1008"/>
+    <rect x="28" y="38" width="244" height="130" rx="3" fill="#0f0905"/>
+    <rect x="28" y="175" width="244" height="148" rx="3" fill="#151008"/>
+    <rect x="40" y="50" width="220" height="105" rx="2" fill="#0a0604"/>
+    <rect x="40" y="188" width="220" height="128" rx="2" fill="#0f0b06"/>
+    <rect x="60" y="198" width="180" height="108" rx="2" fill="#1a1008"/>
+    <!-- logs -->
+    <rect x="55" y="255" width="190" height="18" rx="3" fill="#3a2010"/>
+    <rect x="65" y="262" width="30" height="8" rx="2" fill="#5a3015"/>
+    <rect x="100" y="258" width="45" height="12" rx="2" fill="#6a3818"/>
+    <rect x="150" y="260" width="35" height="10" rx="2" fill="#5a3015"/>
+    <rect x="190" y="256" width="40" height="14" rx="3" fill="#6a3818"/>
+    <!-- glow -->
+    <ellipse cx="150" cy="255" rx="70" ry="8" fill="#ff6a00" opacity="0.18" class="flame1"/>
+    <ellipse cx="150" cy="252" rx="55" ry="6" fill="#ff8c00" opacity="0.22" class="flame2"/>
+    <!-- left flames -->
+    <ellipse cx="120" cy="250" rx="18" ry="28" fill="#ff4500" opacity="0.85" class="flame1"/>
+    <ellipse cx="120" cy="238" rx="12" ry="20" fill="#ff6a00" opacity="0.9" class="flame2"/>
+    <ellipse cx="120" cy="230" rx="8" ry="14" fill="#ffa500" opacity="0.95" class="flame3"/>
+    <ellipse cx="120" cy="224" rx="5" ry="9" fill="#ffd700" opacity="1" class="flame1"/>
+    <!-- center flames -->
+    <ellipse cx="150" cy="248" rx="22" ry="34" fill="#ff5500" opacity="0.9" class="flame2"/>
+    <ellipse cx="150" cy="234" rx="15" ry="24" fill="#ff7700" opacity="0.95" class="flame1"/>
+    <ellipse cx="150" cy="224" rx="10" ry="16" fill="#ffaa00" opacity="1" class="flame3"/>
+    <ellipse cx="150" cy="215" rx="6" ry="10" fill="#ffd700" opacity="1" class="flame2"/>
+    <ellipse cx="150" cy="208" rx="3" ry="6" fill="#fff0a0" opacity="0.9" class="flame1"/>
+    <!-- right flames -->
+    <ellipse cx="180" cy="250" rx="18" ry="26" fill="#ff4800" opacity="0.85" class="flame3"/>
+    <ellipse cx="180" cy="240" rx="12" ry="18" fill="#ff6e00" opacity="0.9" class="flame1"/>
+    <ellipse cx="180" cy="232" rx="7" ry="11" fill="#ffaa00" opacity="1" class="flame2"/>
+    <ellipse cx="180" cy="226" rx="4" ry="7" fill="#ffe066" opacity="1" class="flame3"/>
+    <ellipse cx="100" cy="252" rx="12" ry="18" fill="#ff5000" opacity="0.7" class="flame2"/>
+    <ellipse cx="100" cy="244" rx="8" ry="12" fill="#ff8000" opacity="0.8" class="flame1"/>
+    <ellipse cx="200" cy="252" rx="10" ry="16" fill="#ff5500" opacity="0.65" class="flame1"/>
+    <ellipse cx="200" cy="245" rx="6" ry="10" fill="#ff8800" opacity="0.75" class="flame3"/>
+    <!-- hearth base -->
+    <rect x="28" y="290" width="244" height="40" rx="2" fill="#2a1a0a"/>
+    <rect x="50" y="296" width="200" height="28" rx="2" fill="#1e1206"/>
+    <rect x="0" y="310" width="300" height="30" rx="3" fill="#4a3020"/>
+    <!-- center fireplace -->
+    <rect x="280" y="50" width="320" height="260" rx="6" fill="#1e1408"/>
+    <rect x="290" y="60" width="300" height="240" rx="4" fill="#160e05"/>
+    <rect x="300" y="70" width="280" height="220" rx="3" fill="#0d0802"/>
+    <rect x="312" y="82" width="256" height="196" rx="2" fill="#3d1a08"/>
+    <!-- center fire -->
+    <ellipse cx="440" cy="200" rx="110" ry="80" fill="#c43c00" opacity="0.55" class="flame1"/>
+    <ellipse cx="440" cy="185" rx="85" ry="65" fill="#e05500" opacity="0.6" class="flame2"/>
+    <ellipse cx="440" cy="170" rx="65" ry="50" fill="#f07000" opacity="0.65" class="flame3"/>
+    <ellipse cx="440" cy="158" rx="48" ry="38" fill="#f89000" opacity="0.7" class="flame1"/>
+    <ellipse cx="440" cy="148" rx="34" ry="28" fill="#fcb020" opacity="0.75" class="flame2"/>
+    <ellipse cx="440" cy="140" rx="22" ry="20" fill="#fece50" opacity="0.85" class="flame3"/>
+    <ellipse cx="440" cy="134" rx="12" ry="12" fill="#ffe880" opacity="0.95" class="flame1"/>
+    <ellipse cx="440" cy="130" rx="6" ry="7" fill="#fff5b0" opacity="1" class="flame2"/>
+    <ellipse cx="400" cy="190" rx="60" ry="45" fill="#c84000" opacity="0.5" class="flame3"/>
+    <ellipse cx="400" cy="175" rx="40" ry="32" fill="#e06000" opacity="0.6" class="flame1"/>
+    <ellipse cx="400" cy="163" rx="25" ry="22" fill="#f08000" opacity="0.7" class="flame2"/>
+    <ellipse cx="480" cy="192" rx="55" ry="42" fill="#c43c00" opacity="0.5" class="flame2"/>
+    <ellipse cx="480" cy="178" rx="36" ry="28" fill="#e05800" opacity="0.6" class="flame3"/>
+    <ellipse cx="480" cy="167" rx="22" ry="18" fill="#f07800" opacity="0.7" class="flame1"/>
+    <!-- center logs -->
+    <rect x="340" y="240" width="200" height="22" rx="4" fill="#4a2408"/>
+    <rect x="355" y="244" width="50" height="14" rx="3" fill="#6a3410"/>
+    <rect x="415" y="242" width="70" height="18" rx="3" fill="#7a3e14"/>
+    <rect x="495" y="246" width="35" height="12" rx="3" fill="#6a3410"/>
+    <rect x="280" y="270" width="320" height="30" rx="4" fill="#2a1a08"/>
+    <rect x="290" y="275" width="300" height="20" rx="3" fill="#1e1005"/>
+    <rect x="260" y="300" width="360" height="40" rx="4" fill="#4a3020"/>
+    <!-- candle/lamp on right -->
+    <rect x="630" y="60" width="20" height="260" rx="3" fill="#3a2818"/>
+    <ellipse cx="640" cy="60" rx="10" ry="4" fill="#2a1e10"/>
+    <ellipse cx="640" cy="320" rx="12" ry="5" fill="#2a1e10"/>
+    <ellipse cx="640" cy="140" rx="30" ry="22" fill="#e8a030" opacity="0.12" class="flame2"/>
+    <ellipse cx="640" cy="130" rx="20" ry="14" fill="#f0b840" opacity="0.16" class="flame1"/>
+    <ellipse cx="640" cy="122" rx="12" ry="9" fill="#ffd060" opacity="0.22" class="flame3"/>
+    <ellipse cx="640" cy="116" rx="7" ry="6" fill="#ffe880" opacity="0.3" class="flame2"/>
+    <ellipse cx="640" cy="112" rx="4" ry="4" fill="#fff0a0" opacity="0.45" class="flame1"/>
+    <ellipse cx="640" cy="109" rx="2" ry="2.5" fill="#fffbc0" opacity="0.6" class="flame3"/>
+    <!-- TV / side unit -->
+    <rect x="680" y="140" width="200" height="90" rx="10" fill="#3a2818"/>
+    <rect x="685" y="145" width="190" height="80" rx="8" fill="#4a3425"/>
+    <rect x="692" y="152" width="176" height="66" rx="6" fill="#2a1e12"/>
+    <rect x="698" y="158" width="60" height="54" rx="4" fill="#1e1409"/>
+    <rect x="766" y="158" width="96" height="54" rx="4" fill="#221608"/>
+    <rect x="700" y="160" width="56" height="50" rx="3" fill="#d4541c" opacity="0.7"/>
+    <rect x="708" y="168" width="40" height="34" rx="2" fill="#e86030" opacity="0.55" class="flame3"/>
+    <rect x="716" y="176" width="24" height="18" rx="2" fill="#f8902a" opacity="0.5" class="flame1"/>
+    <rect x="770" y="162" width="88" height="46" rx="3" fill="#1a1006"/>
+    <rect x="680" y="228" width="200" height="12" rx="3" fill="#2a1e12"/>
+    <rect x="680" y="235" width="200" height="8" rx="2" fill="#221808"/>
+    <rect x="660" y="238" width="240" height="18" rx="4" fill="#3a2818"/>
+    <rect x="640" y="252" width="280" height="20" rx="4" fill="#4a3828"/>
+    <rect x="640" y="268" width="280" height="12" rx="3" fill="#3a2818"/>
+    <!-- books on shelf -->
+    <rect x="760" y="100" width="110" height="45" rx="6" fill="#4a3425"/>
+    <rect x="765" y="105" width="100" height="35" rx="4" fill="#3a2818"/>
+    <rect x="770" y="110" width="90" height="25" rx="3" fill="#2a1e12"/>
+    <rect x="775" y="114" width="35" height="17" rx="2" fill="#1e140a"/>
+    <rect x="818" y="114" width="36" height="17" rx="2" fill="#1e140a"/>
+    <rect x="750" y="82" width="130" height="22" rx="4" fill="#5a4030"/>
+    <rect x="755" y="86" width="120" height="14" rx="3" fill="#4a3025"/>
+    <!-- floor -->
+    <rect x="0" y="325" width="900" height="15" fill="#2b1a0c"/>
+    <!-- ambient glow -->
+    <ellipse cx="150" cy="325" rx="120" ry="10" fill="#ff6000" opacity="0.06" class="flame1"/>
+    <ellipse cx="440" cy="325" rx="180" ry="12" fill="#ff6000" opacity="0.08" class="flame2"/>
+    <ellipse cx="640" cy="325" rx="80" ry="8" fill="#ff8000" opacity="0.05" class="flame3"/>
+    <!-- caption -->
+    <text x="450" y="22" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="13" font-style="italic" fill="#c4714a" opacity="0.7">a place to read, think, and wander</text>
+  </svg>
+</div>
+
+<!-- ABOUT -->
+<div class="about-band">
+  <div class="about-inner">
+    <!-- lamp + mug illustration -->
+    <svg width="130" height="170" viewBox="0 0 130 170" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <ellipse cx="65" cy="165" rx="38" ry="6" fill="#c4a07a" opacity="0.35"/>
+      <rect x="59" y="108" width="12" height="55" rx="5" fill="#8B6348"/>
+      <ellipse cx="65" cy="163" rx="26" ry="6" fill="#7A5535"/>
+      <ellipse cx="65" cy="160" rx="34" ry="4" fill="#6B4A2A"/>
+      <polygon points="22,105 108,105 94,52 36,52" fill="#c4714a"/>
+      <polygon points="27,103 103,103 90,56 40,56" fill="#e8956a"/>
+      <polygon points="32,98 98,98 86,60 44,60" fill="#f4aa80" opacity="0.5"/>
+      <ellipse cx="65" cy="104" rx="43" ry="6" fill="#b86040" opacity="0.5"/>
+      <rect x="57" y="44" width="16" height="12" rx="4" fill="#8B6348"/>
+      <line x1="65" y1="44" x2="65" y2="12" stroke="#8B6348" stroke-width="3.5" stroke-linecap="round"/>
+      <rect x="50" y="8" width="30" height="8" rx="4" fill="#7A5535"/>
+      <rect x="53" y="6" width="24" height="6" rx="3" fill="#9A7050"/>
+      <ellipse cx="65" cy="82" rx="30" ry="18" fill="#ffd97a" opacity="0.18"/>
+      <ellipse cx="65" cy="100" rx="44" ry="12" fill="#ffb347" opacity="0.10"/>
+      <!-- mug -->
+      <rect x="10" y="130" width="50" height="32" rx="6" fill="#e8c49a"/>
+      <rect x="14" y="134" width="42" height="24" rx="4" fill="#f5dbb8"/>
+      <rect x="18" y="138" width="15" height="16" rx="2" fill="#d4a070"/>
+      <rect x="36" y="140" width="16" height="3" rx="1" fill="#c09060" opacity="0.7"/>
+      <rect x="36" y="146" width="12" height="2" rx="1" fill="#c09060" opacity="0.5"/>
+      <rect x="36" y="151" width="14" height="2" rx="1" fill="#c09060" opacity="0.5"/>
+      <ellipse cx="35" cy="130" rx="8" ry="3" fill="#d4a070" opacity="0.4"/>
+      <!-- teacup -->
+      <ellipse cx="105" cy="125" rx="12" ry="12" fill="#c8956a"/>
+      <ellipse cx="105" cy="118" rx="9" ry="9" fill="#d4a878"/>
+      <ellipse cx="105" cy="118" rx="7" ry="7" fill="#e8c49a"/>
+      <rect x="100" y="130" width="10" height="22" rx="3" fill="#a07050"/>
+      <ellipse cx="105" cy="152" rx="14" ry="4" fill="#8B6040"/>
+      <path d="M98 120 Q102 114 105 118 Q108 114 112 120" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      <!-- steam -->
+      <ellipse cx="105" cy="112" rx="3" ry="5" fill="#e8f0f8" opacity="0.7" class="steam"/>
+      <ellipse cx="110" cy="108" rx="2" ry="4" fill="#e8f0f8" opacity="0.5" class="steam2"/>
+    </svg>
+
+    <div class="about-copy">
+      <h2>Hello, I'm Shary.</h2>
+      <p>I write because ideas deserve to live somewhere outside my head. My essays wander through culture and politics; my short stories follow people in the quiet margins; my math pieces try to make the abstract feel almost touchable. Everything here is written slowly, with care, and with the hope that it finds the reader who needed it.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SUBSCRIBE -->
+<div class="subscribe-band">
+  <p>Get new pieces in your inbox</p>
+  <div class="subscribe-sub">No noise. Just writing, when it's ready.</div>
+  <div class="sub-row">
+    <input type="email" placeholder="your@email.com"/>
+    <button class="sub-btn">Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Shary</div>
+  <div class="footer-links">
+    <a href="#">Substack</a>
+    <a href="#">Twitter</a>
+    <a href="#">RSS</a>
+  </div>
+</footer>
+
+</body>
+</html>
